@@ -53,3 +53,105 @@ eg:<font size=5 color=red>字体标签示例</font>
 &emsp;	 	一个空白位
 &nbsp;	 	不断行的空白
 ```
+#### 列表标签
+- `<dl>`定义列表的；`<dt>`上层目录；`<dd>`下层目录；
+```
+<dl>
+  <dt>游戏名称</dt>
+    <dd>星级争霸</dd>
+    <dd>红色警戒</dd>
+  <dt>游戏名称</dt>
+    <dd>星级争霸</dd>
+    <dd>红色警戒</dd>
+</dl>
+```
+- `<ol>`定义有序列表（数字标签）（a A 1 i I）；`<li>`行；（type属性可以改变ol的属性type="i"start="3"从3开始）
+```
+<ol>
+  <li>数学名词吗</li>
+  <li>恶魔的科目的</li>
+  <li>的成交单价从文登</li>
+  <li>传递出</li>
+</ol>
+```
+- `<ul>`定义无序列表（符号标签）(黑心圈 白心圈 方块)；`<li>`行；（type换样式）
+定义ul样式
+这几种方法都是通过设置list-style:none来设置的，有的是会用list-style-type，下面我们来看一看它的属性.  
+none不使用项目符号  
+disc实心圆，默认值  
+circle空心圆  
+square实心方块  
+decimal阿拉伯数字  
+lower-roman小写罗马数字  
+upper-roman大写罗马数字  
+lower-alpha小写英文字母  
+upper-alpha大写英文字母  
+```
+<ul>
+  <li>ejne</li>
+  <li>fvcjid</li>
+  <li>ncj</li>
+  <li>fjvifj</li>
+</ul>
+```
+#### 图片标签
+- `<img />`src="路径" alt="图片说明文字"
+#### 表格标签
+- `<table>`定义表格；`<tr>`定义行；`<td>``<th>`定义单元格；`<caption>`表格标题；
+
+1.table标记的常用属性
+
+
+```
+- border	表格边框宽度
+- width	整个表格的宽度
+- height	整个表格的高度(在XHTML里，table标记没有这个属性)
+- background	表格背景图象
+- align	整个表格的对齐方式，,主要有三个值left center right 分别表示左、中、右三种对齐方式
+- bgcolor	整个表格的背景颜色
+- bordercolor	表格边框颜色
+- **cellspacing	表格格间线宽度**
+- rules	表格内部分隔线属性,它有三个值(cols,rows,none)，当rules=cols时，表格会隐藏横向的分隔线，也就是我们只能看到表格的列；当 rules=rows时，就隐藏了纵向的分隔线，也就是我们只能看到表格的行；而当rules=none时，纵向分隔线和横向分隔线将全部隐藏，我们就只能看到一个表格的外框了。
+- frame	表格外部分隔线属性,只对表格的外边框起作用，对内部边、线不起作用 只显示上边框 above, 只显示下边框 below, 只显示左、右边框 vsides, 只显示上、下边框 hsides, 只显示左边框 lhs, 只显示右边框 rhs, 不显示任何边框 void
+- **cellpadding	表格内容与格线之间的宽度(表格的内边距)**
+```
+2.tr标记的常用属性
+
+```
+- bgcolor	内容行的背景颜色
+- border	内容行的边框宽度
+- background	内容行的背景图象
+- align	整行内容的水平对齐方式,主要有三个值left center right 分别表示左、中、右三种对齐方式
+valign	整行内容的垂直对齐方式，主要有三个- 值top middle bottom 分别表示上、中、下三种对齐方式
+- bordercolor	内容行的边框颜色
+```
+3.td标记和th标记的常用属性(th可以作为表头标签)
+
+```
+- width	单元格的宽度
+- height	单元格的高度(在XHTML里，td标记和th标记没有这个属性)
+- bgcolor	单元格的背景颜色
+- border	单元格的边框宽度
+- background	单元格的背景图象
+- align	单元格内容的水平对齐方式，主要有三个值left center right 分别表示左、中、右三种对齐方式
+- valign	单元格内容的垂直对齐方式，主要有三个值top middle bottom 分别表示上、中、下三种对齐方式
+- valign	单元格内容的垂直对齐方式
+- **colspan	单元格横向跨越所占的格数**
+- **rowspan	单元格纵向跨越所占的格数数**
+```
+#### 超链接
+两种用法
+- 超链接<a href="" ></a>
+eg:<a href="http://www.baidu.com" target="`_`blank" >百度</a>
+注：href属性值可以是url，也可以是本地文件；target指定在那个窗口或者是帧中打开；
+- href的值也可以<a href="mailto:abc@sohn.com?subject=haha&&cc=kk@sina.com">联系我们</a>
+<a href="thunder://sjdwjdwqp"></a>
+- 定位标记
+<a name=""></a>
+一般在本页面中使用，当网页页面太长时，定位标记要比拖动滚动条方便，快捷。
+注：定位标记要和超链接一起使用才有效；
+eg:
+<a name="标记">标记位置</a>
+<p.......>制作网页过长的效果
+<a href="#标记">返回标记位置</a>
+注：使用定位标记时，一定在href值的开始加入#标记名
