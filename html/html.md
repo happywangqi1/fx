@@ -155,3 +155,23 @@ eg:
 <p.......>制作网页过长的效果
 <a href="#标记">返回标记位置</a>
 注：使用定位标记时，一定在href值的开始加入#标记名
+
+#### 表单
+###### 表单的基本语法
+- `<form action`="表单提交的地址" method="提交的方法"`></form>`
+注：action属性表示向何处发送数据，默认为当前页面；method属性规定了提交的方式（get或者post）
+- `<input name="表单元素的名称"type="类型"value="值"size="显示的宽度maxlength="能输入的最大字节数"checked="是否被选中/>"`input元素的属性
+- type:text;password;checkbox;radio;submit;reset;
+- file:hidden;image;button.默认为text;
+- checked只有一个值就是checked；如果不选中就不写该属性。
+###### 文本框和按钮
+```
+<form action=""method="post">
+<p>用户名<input type="text" size="21" name="usename"/></p>
+<p>密&nbsp&nbsp&nbsp码<input type="password" size="22" name="password"/></p>
+<p><input type="reset" value="重置"/><input type="submit" value="同意以下服务条款"/> </p>
+<p><input type="button" value="点播音乐"/><input type="reset" value="取消"/> </p>
+</form>
+```
+注：type属性是必选的，name相同表示同一组，size为可选最好写，但按钮的value必选；
+###### 单选框和复选框
