@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+   <style media="screen">
+
+     .v1{
+       width: 100px;
+
+       height: 100px;
+
+       background: red;
+
+       position: absolute;
+
+       left:100px;
+
+       top:100px;
+
+  }
+  .v2{
+    width: 100px;
+
+    height: 100px;
+
+    background: yellow;
+
+    position: absolute;
+
+    left:250px;
+
+    top:50px;
+
+}
+.v3{
+  width: 100px;
+
+  height: 100px;
+
+  background: green;
+
+  position: absolute;
+
+  left:400px;
+
+  top:100px;
+
+}
+
+
+   </style>
+
+   <script src="js/moveutil.js" charset="utf-8"></script>
+
+  <script type="text/javascript">
+
+    window.onload = function(){
+
+      var pos = [];
+
+     var divs = document.getElementsByTagName('div');
+
+     for(var i=0;i<divs.length;i++){
+
+         var sp = {};
+
+         sp.left = parseInt(getStyle(divs[i],'left'));
+
+         sp.top = parseInt(getStyle(divs[i],'top'));
+
+        pos.push(sp);
+
+     }
+
+     var button1 = document.getElementsByTagName('button')[0];
+
+
+     button1.onclick = function(){
+
+         pos.push(pos.shift());
+
+       for(var i=0;i<divs.length;i++){
+
+      HCMove(divs[i],{left:pos[i].left,top:pos[i].top});
+
+
+       }
+
+    }
+
+  var button2 = document.getElementsByTagName('button')[1];
+
+
+  button2.onclick = function(){
+
+      pos.unshift(pos.pop());
+
+      for(var i=0;i<divs.length;i++){
+
+     HCMove(divs[i],{left:pos[i].left,top:pos[i].top});
+
+
+      }
+
+  }
+
+
+
+
+
+
+    }
+
+     function getStyle(obj,attr){
+
+       if(obj.currentStyle){
+
+         return obj.currentStyle[attr];
+
+       }
+       return getComputedStyle(obj,false)[attr];
+
+
+     }
+
+
+
+  </script>
+
+
+
+
+
+  </head>
+  <body>
+
+   <button>向后</button><button>向前</button>
+
+
+    <div class="v1">
+
+    </div>
+
+    <div class="v2">
+
+    </div>
+
+    <div class="v3">
+
+    </div>
+
+
+
+
+  </body>
+</html>

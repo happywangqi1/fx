@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style media="screen">
+
+      *{
+
+        margin:0px;
+
+        padding: 0px;
+
+
+      }
+
+     img{
+
+       display: block;
+
+        vertical-align: top;
+
+        border: none;
+     }
+
+     a{
+       text-decoration: none;
+
+       display: block;
+
+      }
+
+      .view{
+
+       margin: 200px 200px;
+
+       position: relative;;
+
+       /*overflow: hidden;*/
+
+
+
+      }
+
+      ul{
+        list-style: none;
+
+        position: absolute;
+
+        left:0px;
+
+        top:0px;
+
+
+      }
+
+    clear:after{
+
+      content:'';
+
+      display: block;
+
+      clear: both;
+
+
+    }
+
+
+      ul li{
+
+       float: left;
+
+      }
+
+ </style>
+
+ <script src="js/moveutil.js" charset="utf-8"></script>
+
+  <script type="text/javascript">
+
+  window.onload = function(){
+
+    var obj = document.getElementsByClassName('view')[0];
+    var images=['images/loop01.jpg','images/loop02.jpg','images/loop03.jpg','images/loop04.jpg','images/loop05.jpg'];
+
+     var imagewidth=100;
+
+     var imageheight =100;
+
+     var viewcount=2;
+
+     var scale = 2;
+
+    Init(obj,imagewidth,imageheight,viewcount,images);
+
+    Loop(obj,imagewidth,imageheight,viewcount,scale);
+
+   TsTime(obj,imagewidth,imageheight,viewcount,scale);
+
+   ImageScale(obj,imagewidth,imageheight,viewcount,scale);
+
+
+  }
+
+    function Init(obj,imagewidth,imageheight,viewcount,images){
+
+      var ul = obj.getElementsByTagName('ul')[0];
+
+      for(var i=0;i<images.length;i++){
+
+         var li = document.createElement('li');
+
+         var a = document.createElement('a');
+
+         var img = document.createElement('img');
+
+         img.src=images[i];
+
+         img.style.width = imagewidth+'px';
+
+         img.style.height =imageheight+'px';
+
+         a.appendChild(img);
+
+         li.appendChild(a);
+
+         ul.appendChild(li);
+
+      }
+
+      obj.style.width = viewcount*imagewidth+'px';
+
+      obj.style.height=imageheight+'px';
+
+      ul.style.width = images.length*imagewidth+'px';
+
+    }
+
+   function FnTab(obj,imagewidth,imageheight,viewcount,scale){
+
+         var ul = obj.getElementsByTagName('ul')[0];
+
+         var lis = ul.getElementsByTagName('li');
+
+         HCMove(ul,{left:-imagewidth*viewcount},function(){
+
+           for(var i=0;i<viewcount;i++){
+
+             var clone =ul.firstElementChild.cloneNode(true);
+
+             ul.removeChild(ul.firstElementChild);
+
+             ul.appendChild(clone);
+            }
+
+              ul.style.left='0px';
+
+              ImageScale(obj,imagewidth,imageheight,viewcount,scale);
+
+         });
+
+   }
+
+   function Loop(obj,imagewidth,imageheight,viewcount,scale){
+
+      obj.timer = setInterval(function(){
+
+         FnTab(obj,imagewidth,imageheight,viewcount,scale);
+
+      },3000);
+
+   }
+
+   function TsTime(obj,imagewidth,imageheight,viewcount,scale){
+
+       obj.onmouseenter = function(){
+
+          clearInterval(obj.timer);
+       }
+
+       obj.onmouseleave = function(){
+
+           Loop(obj,imagewidth,imageheight,viewcount,scale);
+
+       }
+    }
+
+    function ImageScale(obj,imagewidth,imageheight,scale,viewcount){
+
+        var ul = obj.getElementsByTagName('ul')[0];
+
+        var as = ul.getElementsByTagName('a');
+
+        for(var i=0;i<as.length;i++){
+
+             var a = as[i];
+
+             a.onmouseenter = function(){
+
+                this.style.position = 'absolute';
+
+                this.parentNode.style.width = imagewidth+'px';
+
+                this.parentNode.style.height =imageheight+'px';
+                var left = this.parentNode.offsetLeft-imagewidth*(scale-1)/2;
+
+                var top = this.parentNode.offsetTop-imageheight*(scale-1)/2;
+
+                // obj.style.position='absolute';
+
+                // obj.style.left = -imagewidth*(scale-1)/2+'px';
+
+                // obj.style.top = -imageheight*(scale-1)/2+'px';
+
+                // obj.style.width=imagewidth*viewcount+imagewidth*(scale-1)/2+'px';
+
+                // obj.style.height = imageheight+imageheight*(scale-1)+'px';
+
+                this.style.width =scale*imagewidth+'px';
+
+                this.style.height = scale*imageheight+'px';
+
+                this.style.left = left+'px';
+
+                this.style.top = top+'px';
+
+                HCMove(this.firstElementChild,{width:scale*imagewidth,height:scale*imageheight});
+
+                this.style.zIndex=2;
+
+              }
+
+              a.onmouseleave = function(){
+
+                this.style.position = 'static';
+
+                this.style.width = imagewidth+'px';
+
+                this.style.height=imageheight+'px';
+
+                HCMove(this.firstElementChild,{width:imagewidth,height:imageheight});
+
+                this.style.zIndex=1;
+              }
+
+        }
+
+    }
+
+  </script>
+
+
+
+
+  </head>
+  <body>
+
+
+
+      <div class="view">
+
+       <ul class="clear">
+
+
+      </ul>
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

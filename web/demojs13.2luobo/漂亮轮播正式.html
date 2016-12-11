@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/plloop.css" media="screen" title="no title" charset="utf-8">
+    <script src="js/moveutil.js" charset="utf-8"></script>
+
+     <script type="text/javascript">
+
+       window.onload = function(){
+
+        var obj = document.getElementsByClassName('view')[0];
+
+        var pos = Init(obj);
+
+
+
+        lrButton(obj,pos);
+
+        Loop(obj,pos);
+
+
+
+
+       }
+
+       function Init(obj){
+
+          var objs = obj.getElementsByTagName('a');
+
+          var pos = [];
+
+          for(var i=0;i<objs.length;i++){
+
+              var sp = {};
+
+              sp.width = parseInt(getStyle(objs[i],'width'));
+
+              sp.height=parseInt(getStyle(objs[i],'height'));
+
+              sp.left=parseInt(getStyle(objs[i],'left'));
+
+              sp.top = parseInt(getStyle(objs[i],'top'));
+
+              sp.zindex = getStyle(objs[i],'zIndex');
+
+
+
+              pos.push(sp);
+
+
+
+
+          }
+
+
+          return pos;
+
+       }
+
+
+       function FnTab(obj,pos){
+
+        var objs = obj.getElementsByTagName('a');
+
+
+           for(var i=0;i<objs.length;i++){
+
+                 var ob = objs[i];
+              TimeMove(ob,{left:pos[i].left,top:pos[i].top,width:pos[i].width,height:pos[i].height},'elasticOut',1000);
+
+              TimeMove(ob.firstElementChild,{width:pos[i].width,height:pos[i].height},'elasticOut',1000);
+
+               ob.style.zIndex = pos[i].zindex;
+
+
+
+
+
+         }
+
+
+
+       }
+
+       function getStyle(obj,attr){
+
+         if(obj.currentStyle){
+
+           return obj.currentStyle[attr];
+
+
+         }
+
+         return getComputedStyle(obj,false)[attr];
+
+       }
+
+       function lrButton(obj,pos){
+
+         var left = obj.getElementsByClassName('left')[0];
+
+         var right = obj.getElementsByClassName('right')[0];
+
+         obj.onmouseenter = function(){
+
+           left.style.display='block';
+
+           right.style.display='block';
+
+           clearInterval(obj.timer);
+
+
+         }
+
+         obj.onmouseleave = function(){
+
+           left.style.display='none';
+
+           right.style.display='none';
+
+           Loop(obj,pos);
+
+         }
+
+
+         left.onclick = function(){
+
+            pos.unshift(pos.pop());
+
+
+
+            FnTab(obj,pos);
+
+
+         }
+
+         right.onclick = function(){
+
+            pos.push(pos.shift());
+
+             FnTab(obj,pos);
+         }
+
+       }
+
+      function Loop(obj,pos){
+
+        obj.timer = setInterval(function(){
+
+            pos.unshift(pos.pop());
+
+               FnTab(obj,pos);
+
+
+        },3000);
+
+
+      }
+
+
+
+
+     </script>
+
+
+  </head>
+  <body>
+
+    <div class="view">
+
+      <a href="#" class="v1">
+
+        <img src="images/loop01.jpg" alt="" />
+
+      </a>
+      <a href="#" class="v2">
+
+        <img src="images/loop02.jpg" alt="" />
+
+      </a>
+      <a href="#" class="v3">
+
+        <img src="images/loop03.jpg" alt="" />
+
+      </a>
+      <a href="#" class="v4">
+
+        <img src="images/loop04.jpg" alt="" />
+
+      </a>
+      <a href="#" class="v5">
+
+        <img src="images/loop05.jpg" alt="" />
+
+      </a>
+
+      <button class='left'><</button>
+
+      <button class='right'>></button>
+
+
+    </div>
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="stylesheet" href="css/flash.css" media="screen" title="no title" charset="utf-8">
+
+    <script src="js/moveutil.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+
+      window.onload = function(){
+
+          var obj = document.getElementsByClassName('view')[0];
+
+          var images = ['images/loop01.jpg','images/loop02.jpg','images/loop03.jpg','images/loop04.jpg','images/loop05.jpg'];
+
+          obj.zindex=2;
+
+          obj.lrindex=3;
+
+          obj.now=0;
+
+        FlashLoop(obj,images);
+
+
+
+
+      }
+
+      function FlashLoop(obj,images){
+
+        Init(obj,images);
+
+        Loop(obj,images);
+
+        lrButton(obj,images);
+
+      }
+
+
+      function Init(obj,images){
+
+        var top = obj.getElementsByClassName('top')[0];
+
+        var middle =obj.getElementsByClassName('middle')[0];
+
+        var ul = middle.getElementsByTagName('ul')[0];
+
+         var ulwidth=0;
+
+        for(var i=0;i<images.length;i++){
+
+            var a = document.createElement('a');
+
+            var li=document.createElement('li');
+
+            li.innerHTML='<a><img src="'+images[i]+'"/></a>';
+
+            a.innerHTML='<img src="'+images[i]+'"/>';
+
+            top.appendChild(a);
+             ul.appendChild(li);
+
+             ulwidth+=li.offsetWidth+parseInt(getStyle(li,'marginLeft'));
+
+          }
+        var lis = ul.getElementsByTagName('li');
+
+        for(var i=0;i<3;i++){
+
+          var clone = lis[i].cloneNode(true);
+
+          ul.appendChild(clone);
+
+        }
+
+
+
+          ul.style.width=ulwidth+3*(ul.firstElementChild.offsetWidth+parseInt(getStyle(ul.firstElementChild,'marginLeft')))+'px';
+
+
+       FnTab(obj,images);
+
+
+
+      }
+
+     function getStyle(obj,attr){
+
+        if(obj.currentStyle){
+
+          return obj.currentStyle[attr];
+
+        }
+
+        return getComputedStyle(obj,false)[attr];
+
+     }
+
+     function FnTab(obj,images){
+
+           var left = obj.getElementsByClassName('left')[0];
+
+           var right = obj.getElementsByClassName('right')[0];
+
+           var top = obj.getElementsByClassName('top')[0];
+
+           var middle = obj.getElementsByClassName('middle')[0];
+
+           var bottom = obj.getElementsByClassName('bottom')[0];
+
+            var ul = middle.getElementsByTagName('ul')[0];
+
+           var as = top.getElementsByTagName('a');
+
+           var imageindex = obj.now%images.length;
+
+           as[imageindex].style.zIndex=obj.zindex;
+
+           left.style.zIndex=obj.lrindex;
+
+           right.style.zIndex=obj.lrindex;
+
+           var aheight = as[imageindex].offsetHeight;
+           as[imageindex].style.height='0px';
+
+           as[imageindex].style.overflow='hidden';
+
+           TimeMove(as[imageindex],{height:aheight},'easeOutStrong',1000);
+
+            var mp = ul.firstElementChild.offsetWidth+parseInt(getStyle(ul.firstElementChild,'marginLeft'));
+
+          TimeMove(ul,{left:-obj.now*mp},'easeOutStrong',1000,function(){
+
+             if(obj.now==images.length){
+
+                obj.now=0;
+
+                ul.style.left='0px';
+
+             }
+
+
+          });
+
+        bottom.innerHTML=(imageindex+1)+"/"+images.length;
+
+        var lis = ul.getElementsByTagName('li');
+
+        for(var i=0;i<lis.length;i++){
+
+            lis[i].style.opacity='0.5';
+
+            lis[i].style.filter='alpha(opacity=50)';
+
+        }
+        lis[imageindex].style.opacity=1;
+
+        lis[imageindex].style.filter='alpha(opacity=100)';
+
+
+   }
+
+   function Loop(obj,images){
+
+      obj.timer = setInterval(function(){
+
+          obj.zindex++;
+
+          obj.now++;
+
+          obj.lrindex++;
+
+          FnTab(obj,images);
+
+
+      },3000);
+
+
+
+   }
+
+   function lrButton(obj,images){
+
+      var left = obj.getElementsByClassName('left')[0];
+
+      var right = obj.getElementsByClassName('right')[0];
+
+      obj.onmouseenter = function(){
+
+         clearInterval(obj.timer);
+
+         left.style.display='block';
+
+         right.style.display='block';
+
+      }
+
+      obj.onmouseleave = function(){
+
+         Loop(obj,images);
+
+         left.style.display='none';
+
+         right.style.display='none';
+
+      }
+
+      left.onclick = function(){
+
+        obj.now--;
+        obj.zindex++;
+
+        obj.lrindex++;
+
+        if(obj.now==-1){
+
+          obj.now=images.length-1;
+
+        }
+
+        FnTab(obj,images);
+
+
+
+
+      }
+
+      right.onclick = function(){
+
+         obj.now++;
+
+         obj.zindex++;
+
+         obj.lrindex++;
+
+         if(obj.now==images.length){
+
+          obj.now=0;
+
+         }
+
+         FnTab(obj,images);
+
+
+      }
+
+   }
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+  </head>
+  <body>
+
+   <div class="view">
+
+     <div class="top">
+
+     </div>
+
+     <div class="middle">
+
+      <ul>
+
+
+      </ul>
+
+     </div>
+
+     <div class="bottom">
+
+
+
+
+     </div>
+
+     <button class='left'><</button>
+     <button class='right'>></button>
+
+   </div>
+
+
+
+  </body>
+</html>

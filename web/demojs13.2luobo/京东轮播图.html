@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+   <link rel="stylesheet" href="css/jdloop.css" media="screen" title="no title" charset="utf-8">
+
+  <script src="js/moveutil.js" charset="utf-8"></script>
+
+  <script type="text/javascript">
+
+    window.onload = function(){
+
+      var view = document.getElementsByClassName('view')[0];
+
+      var images = ['images/loop01.jpg','images/loop02.jpg','images/loop03.jpg','images/loop04.jpg','images/loop05.jpg'];
+
+       view.zindex=2;
+
+       view.zindexbar=3;
+
+       view.now = 0;
+
+      JdLoop(view,images);
+
+
+
+
+    }
+
+   function JdLoop(obj,images){
+
+     Init(obj,images);
+
+     Loop(obj,images);
+
+     lrButton(obj,images);
+
+     navBar(obj,images);
+
+
+   }
+
+
+
+    function Init(obj,images){
+
+       var left = obj.getElementsByClassName('left')[0];
+
+       var right = obj.getElementsByClassName('right')[0];
+
+       left.style.zIndex=obj.zindexbar;
+
+       right.style.zIndex=obj.zindexbar;
+
+       var navbar = obj.getElementsByClassName('nav-bar')[0];
+
+       var left = (obj.offsetWidth-23*images.length)/2;
+
+       navbar.style.left=left+'px';
+      for(var i=0;i<images.length;i++){
+
+           var span = document.createElement('span');
+
+           span.innerHTML=i+1;
+
+           if(i==0){ 
+
+             span.style.background='red';
+           }
+
+           navbar.appendChild(span);
+          }
+navbar.style.zIndex=obj.zindexbar;
+  for(var i=0;i<images.length;i++){
+
+        var e = document.createElement('a');
+
+        e.innerHTML='<img src="'+images[i]+'"/>';
+
+       if(i==0){
+
+          e.style.zIndex = obj.zindex;
+
+       }
+
+        obj.appendChild(e);
+
+      }
+
+
+
+
+    }
+
+  function FnTab(obj,images){
+
+    var as = obj.getElementsByTagName('a');
+
+   var left = obj.getElementsByClassName('left')[0];
+
+    var right = obj.getElementsByClassName('right')[0];
+
+    var navbar = obj.getElementsByClassName('nav-bar')[0];
+
+     var spans = navbar.getElementsByTagName('span');
+
+     for(var i=0;i<spans.length;i++){
+
+       spans[i].style.background='black';
+
+     }
+
+    var aindex = obj.now%images.length;
+
+    as[aindex].style.zIndex=obj.zindex;
+
+      as[aindex].style.opacity=0;
+
+      as[aindex].style.filter = 'alpha(opacity=0)';
+
+      HCMove(as[aindex],{opacity:100});
+
+    spans[aindex].style.background='red';
+    navbar.style.zIndex = obj.zindexbar;
+
+    left.style.zIndex=obj.zindexbar;
+
+    right.style.zIndex=obj.zindexbar;
+
+  }
+
+  function Loop(obj,images){
+
+     obj.timer = setInterval(function(){
+
+       obj.zindex++;
+
+       obj.zindexbar++;
+
+       obj.now++;
+
+
+       FnTab(obj,images);
+
+     },2000);
+
+
+  }
+
+  function lrButton(obj,images){
+
+   var leftbutton = obj.getElementsByClassName('left')[0];
+
+   var rightbutton = obj.getElementsByClassName('right')[0];
+
+   obj.onmouseenter = function(){
+
+      leftbutton.style.display='block';
+
+      rightbutton.style.display='block';
+
+      clearInterval(obj.timer);
+
+   }
+   obj.onmouseleave = function(){
+
+     leftbutton.style.display='none';
+
+     rightbutton.style.display='none';
+
+     Loop(obj,images);
+
+
+   }
+
+   leftbutton.onclick = function(){
+   obj.now--;
+     if(obj.now==-1){
+
+       obj.now = images.length-1;
+
+     }
+
+
+
+
+
+     obj.zindex++;
+
+     obj.zindexbar++;
+    FnTab(obj,images);
+}
+
+  rightbutton.onclick = function(){
+
+     obj.now++;
+     obj.zindex++;
+
+     obj.zindexbar++;
+
+       FnTab(obj,images);
+
+
+  }
+
+
+
+  }
+
+function navBar(obj,images){
+
+  var navbar = obj.getElementsByClassName('nav-bar')[0];
+
+  var spans = obj.getElementsByTagName('span');
+
+  for(var i=0;i<spans.length;i++){
+
+     spans[i].index = i;
+
+     spans[i].onclick = function(){
+
+       obj.now = this.index;
+
+       obj.zindex++;
+
+       obj.zindexbar++;
+
+     FnTab(obj,images);
+     }
+  }
+}
+  </script>
+  </head>
+  <body>
+    <div class="view">
+     <div class="nav-bar">
+     </div>
+     <button class="left"><</button>
+     <button class="right">></button>
+   </div>
+  </body>
+</html>

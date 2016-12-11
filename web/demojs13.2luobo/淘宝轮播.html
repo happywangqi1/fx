@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="stylesheet" href="css/tbloop.css" media="screen" title="no title" charset="utf-8">
+
+     <script src="js/moveutil.js" charset="utf-8"></script>
+
+     <script type="text/javascript">
+
+       window.onload = function(){
+
+         var obj = document.getElementsByClassName('view')[0];
+
+         var images = ['images/loop01.jpg','images/loop02.jpg','images/loop03.jpg','images/loop04.jpg','images/loop05.jpg'];
+
+          obj.now=0;
+
+         TbLoop(obj,images);
+
+
+
+       }
+
+       function TbLoop(obj,images){
+
+         Init(obj,images);
+
+         Loop(obj,images);
+
+        lrButton(obj,images);
+
+        navBar(obj,images);
+
+       }
+
+      function Init(obj,images){
+
+
+
+
+        var ul = obj.getElementsByTagName('ul')[0];
+
+
+
+          var ulwidth=0;
+        for(var i=0;i<images.length;i++){
+
+           var e = document.createElement('li');
+
+           e.innerHTML='<a href="#"><img src="'+images[i]+'"/></a>';
+
+           ul.appendChild(e);
+
+          ulwidth+=e.offsetWidth;
+          }
+        var clone = ul.firstElementChild.cloneNode(true);
+
+        ul.appendChild(clone);
+
+        ul.style.width =ulwidth+clone.offsetWidth+'px';
+
+        var navbar = obj.getElementsByClassName('nav-bar')[0];
+
+        var navbarwidth=0;
+        for(var i=0;i<images.length;i++){
+
+           var e = document.createElement('span');
+
+           e.innerHTML=i+1;
+
+           navbar.appendChild(e);
+
+          navbarwidth+=e.offsetWidth+parseInt(getStyle(e,'marginRight'));
+
+        }
+
+        var left = (obj.offsetWidth-navbarwidth)/2;
+
+        navbar.style.left = left+'px';
+
+        FnTab(obj,images);
+
+
+      }
+       function getStyle(obj,attr){
+
+         if(obj.currentStyle){
+
+           return obj.currentStyle[attr];
+
+         }
+
+          return getComputedStyle(obj,false)[attr];
+
+       }
+
+      function FnTab(obj,images){
+
+         var ul = obj.getElementsByTagName('ul')[0];
+
+         var li = ul.firstElementChild;
+
+         var imageindex = obj.now%images.length;
+
+         TimeMove(ul,{left:-obj.now*li.offsetWidth},'easeOutStrong',1500,function(){
+
+           if(obj.now==images.length){
+
+               obj.now=0;
+
+               ul.style.left='0px';
+
+           }
+
+         });
+
+        var navbar = obj.getElementsByClassName('nav-bar')[0];
+
+        var spans = navbar.getElementsByTagName('span');
+
+        for(var i=0;i<spans.length;i++){
+
+           spans[i].style.background ='black';
+
+        }
+        spans[imageindex].style.background='red';
+
+
+      }
+
+      function Loop(obj,images){
+
+        obj.timer = setInterval(function(){
+
+         obj.now++;
+
+        FnTab(obj,images);
+
+        },3000);
+
+
+      }
+
+      function lrButton(obj,images){
+
+        var left = obj.getElementsByClassName('left')[0];
+
+        var right = obj.getElementsByClassName('right')[0];
+
+        obj.onmouseenter = function(){
+
+           left.style.display='block';
+
+           right.style.display='block';
+
+           clearInterval(obj.timer);
+
+        }
+
+        obj.onmouseleave = function(){
+          left.style.display='none';
+
+          right.style.display='none';
+
+         Loop(obj,images);
+
+
+
+        }
+
+        left.onclick = function(){
+
+            obj.now--;
+
+            if(obj.now==-1){
+
+               obj.now = images.length-1;
+
+            }
+            FnTab(obj,images);
+
+
+        }
+
+        right.onclick = function(){
+
+            obj.now++;
+
+            if(obj.now==images.length){
+
+            obj.now=0;
+
+            }
+          FnTab(obj,images);
+
+        }
+
+
+
+      }
+
+     function navBar(obj,images){
+
+       var navbar = obj.getElementsByClassName('nav-bar')[0];
+
+       var spans = navbar.getElementsByTagName('span');
+
+       for(var i=0;i<spans.length;i++){
+
+          spans[i].index = i;
+
+          spans[i].onclick = function(){
+
+               obj.now = this.index;
+
+               FnTab(obj,images);
+
+          }
+
+
+       }
+
+
+
+
+
+     }
+
+
+
+
+
+
+
+     </script>
+
+
+
+
+  </head>
+  <body>
+
+    <div class="view">
+
+      <ul>
+
+      </ul>
+
+      <div class="nav-bar">
+
+      </div>
+
+      <button class='left'><</button>
+
+      <button class='right'>></button>
+
+    </div>
+
+
+
+
+  </body>
+</html>
